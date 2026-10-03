@@ -378,7 +378,7 @@ export const PLAYBOOKS = [
       "Use the input playbook instead for non-grill input surfaces such as tuning, triage or tracked batches.",
     ],
     structure: [
-      'Write a page with `<link rel="stylesheet" href="/design/hoopssim-grill.css">`, `<div id="hoopssim-grill"></div>`, a `<script type="application/json" id="hoopssim-grill-data">` holding the question list, and `<script src="/design/hoopssim-grill.js"></script>` after it. Both /design links are inlined by `lavish-axi export`.',
+      'Write a page with `<link rel="stylesheet" href="/design/hoopssim.css">` (the game\'s charcoal look), `<link rel="stylesheet" href="/design/hoopssim-grill.css">`, `<div id="hoopssim-grill"></div>`, a `<script type="application/json" id="hoopssim-grill-data">` holding the question list, and `<script src="/design/hoopssim-grill.js"></script>` after it. All /design links are inlined by `lavish-axi export`.',
       'The question list is a JSON array. Each entry: `{ "id": "short-stable-id", "round": 1, "question": "What Kane decides", "options": [{ "label": "Option name", "text": "One short paragraph on what it means and costs", "star": true }] }`. `star` is optional and goes on at most the options the evidence supports.',
       "To open a later round, append entries with `round` 2 (then 3 and so on) to the same list and save the file. Answered cards stay visible above it.",
       "Each Queue press reaches `lavish-axi poll` as a prompt with tag `grill-answer` and `target: { question, option, note }`: `question` is the entry id, `option` is the chosen label or null, `note` is the note text or an empty string. Read those fields; do not parse the prompt prose.",

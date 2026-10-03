@@ -53,6 +53,7 @@ await copyFile("node_modules/daisyui/themes.css", "dist/design/daisyui-themes.cs
 await copyFile("node_modules/@tailwindcss/browser/dist/index.global.js", "dist/design/tailwindcss-browser.js");
 await copyFile("src/grill/hoopssim-grill.js", "dist/design/hoopssim-grill.js");
 await copyFile("src/grill/hoopssim-grill.css", "dist/design/hoopssim-grill.css");
+await copyFile("src/grill/hoopssim.css", "dist/design/hoopssim.css");
 
 // Whiteboard frame: a self-contained browser bundle (Excalidraw + the Mermaid
 // converter + its exactly-pinned mermaid + React) served from

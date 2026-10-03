@@ -3477,6 +3477,7 @@ test("design asset resolver only trusts exact packaged design asset paths", () =
 test("hoopssim grill renderer and stylesheet resolve as design assets", () => {
   assert.match(resolveDesignAssetPath("/design/hoopssim-grill.js") || "", /hoopssim-grill\.js$/);
   assert.match(resolveDesignAssetPath("/design/hoopssim-grill.css") || "", /hoopssim-grill\.css$/);
+  assert.match(resolveDesignAssetPath("/design/hoopssim.css") || "", /hoopssim\.css$/);
 });
 
 test("GET /api/:key/export inlines local assets and leaves remote references intact", async () => {

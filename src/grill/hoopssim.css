@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Public+Sans:wght@400;500;600&display=swap");
+
+/* Hoops Sim, theme 3b (warm charcoal + parchment gold). Hand-copied once from the game's
+   Build/frontend/src/index.css and docs/design/LOCKED-DECISIONS.md; no sync. */
+:root {
+  --canvas: #100d08;
+  --panel-bg: #17140f;
+  --header-bg: #201a12;
+  --inner-bg: #211c14;
+
+  --border-card: rgba(233, 220, 190, 0.12);
+  --border-hairline: rgba(233, 220, 190, 0.1);
+  --border-row: rgba(233, 220, 190, 0.08);
+  --border-faint-row: rgba(233, 220, 190, 0.07);
+
+  --text-primary: #f2ecdd;
+  --text-body: #ece6d8;
+  --text-muted: #a79c86;
+  --text-faint: #8c826d;
+
+  --bar-track: rgba(233, 220, 190, 0.09);
+
+  --accent-neutral: #d9b25f;
+  --accent-neutral-hover: #e3c27e;
+  --accent-neutral-tint: rgba(217, 178, 95, 0.15);
+
+  --accent-team: #e4794e;
+  --accent-team-far: #8e401f;
+  --team-identity: linear-gradient(140deg, var(--accent-team), var(--accent-team-far));
+
+  --win: #8fd5a0;
+  --win-bg: rgba(143, 213, 160, 0.14);
+  --accent-negative: #d0473d;
+  --row-yourteam-bg: rgba(233, 220, 190, 0.06);
+
+  --accent-champion: #f0c860;
+  --accent-champion-bg: rgba(240, 200, 96, 0.12);
+  --accent-champion-text: #f0c860;
+
+  --font-lettering: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-numeric: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  color-scheme: dark;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: var(--canvas);
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-lettering);
+  color: var(--text-primary);
+}
+
+a {
+  color: var(--accent-neutral);
+}
+
+.panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-card);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: var(--panel-bg);
+}
+th {
+  font-family: var(--font-body);
+  text-align: left;
+  color: var(--text-muted);
+  background: var(--header-bg);
+  font-weight: 500;
+}
+td {
+  font-family: var(--font-numeric);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+th,
+td {
+  padding: 0.45rem 0.7rem;
+  border-bottom: 1px solid var(--border-row);
+}
+td.col-name {
+  font-family: var(--font-body);
+  font-variant-numeric: normal;
+}

@@ -153,6 +153,9 @@ export const REVISION_REGISTRY_SNIPPET = `<script type="application/json" data-l
 export const DESIGN_PRIORITY_RULE =
   "Decide the design direction in this strict priority order, and only move to the next step when the current one truly yields nothing: (1) if the user asked for a specific look or named design system, use that; (2) otherwise you must first inspect the project the artifact is about - the subject or product whose content or UI it represents, which may differ from your current working directory - and match that project's design system: Tailwind or theme config, shared CSS variables or design tokens, component library, brand assets, or existing styled pages. If the artifact previews, proposes, or mocks a specific app's UI, render it in that app's own design system so it faithfully shows the product, even when you are running in a different repo; (3) only when both steps come up empty, use the Lavish-recommended Tailwind CSS browser runtime v4 + DaisyUI v5, available via CDN, and prefer that CDN snippet over hand-writing styles unless explicitly instructed otherwise by the user.";
 
+export const HOOPSSIM_DESIGN_RULE =
+  'If the artifact is about hoopssim (Hoops Sim), do not dig through the game\'s design files: put `<link rel="stylesheet" href="/design/hoopssim.css">` in the `<head>` and stop - it carries the game\'s locked charcoal theme and typefaces, and `lavish-axi export` inlines it. Hoopssim mockups use made-up names and numbers; never run a simulation to get them.';
+
 export const DESIGN_SYSTEM_HINT =
   "Lavish does not auto-inject any design system - artifacts stay portable so they render identically when opened directly without lavish-axi running. Before writing any HTML: " +
   DESIGN_PRIORITY_RULE +
@@ -201,6 +204,11 @@ export function createDesignOutput() {
     playbook_router: {
       instruction: PLAYBOOK_ROUTER_INSTRUCTION,
       playbooks: listPlaybooks(),
+    },
+    hoopssim: {
+      use_when: "The artifact is about hoopssim (Hoops Sim).",
+      rule: HOOPSSIM_DESIGN_RULE,
+      stylesheet_link: '<link rel="stylesheet" href="/design/hoopssim.css">',
     },
     design: {
       summary:

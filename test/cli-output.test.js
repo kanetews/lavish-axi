@@ -444,6 +444,14 @@ test("playbook index output lists known playbooks with concise descriptions", ()
   assert.ok(output.help.some((item) => item.includes("MUST open each matching playbook")));
 });
 
+test("design output tells a hoopssim artifact to link the game stylesheet and use made-up numbers", () => {
+  const { hoopssim } = createDesignOutput();
+  assert.match(hoopssim.rule, /\/design\/hoopssim\.css/);
+  assert.match(hoopssim.rule, /made-up names and numbers/);
+  assert.match(hoopssim.rule, /never run a simulation/);
+  assert.doesNotMatch(DESIGN_PRIORITY_RULE, /hoopssim/);
+});
+
 test("hoopssim-grill playbook carries the grill rules and the input playbook never gates a note-only answer", () => {
   const grill = createPlaybookOutput(["hoopssim-grill"]).playbook;
   const rules = grill.design_rules.join("\n");

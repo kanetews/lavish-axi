@@ -107,6 +107,11 @@ const designAssetUrls = {
     source: new URL("./grill/hoopssim-grill.js", import.meta.url),
     type: "application/javascript",
   },
+  "hoopssim.css": {
+    packaged: new URL("./design/hoopssim.css", import.meta.url),
+    source: new URL("./grill/hoopssim.css", import.meta.url),
+    type: "text/css",
+  },
   "hoopssim-grill.css": {
     packaged: new URL("./design/hoopssim-grill.css", import.meta.url),
     source: new URL("./grill/hoopssim-grill.css", import.meta.url),

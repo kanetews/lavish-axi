@@ -1,30 +1,17 @@
+/* Layered on /design/hoopssim.css: link that first; it supplies the tokens, fonts and body. */
 :root {
-  --hg-bg: #f7f7f5;
-  --hg-card: #ffffff;
-  --hg-text: #1c1c1a;
-  --hg-muted: #5f5f58;
-  --hg-line: #d9d9d2;
-  --hg-accent: #b45309;
-  --hg-accent-text: #ffffff;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --hg-bg: #161615;
-    --hg-card: #1f1f1d;
-    --hg-text: #ecebe6;
-    --hg-muted: #a3a29a;
-    --hg-line: #3a3a36;
-    --hg-accent: #f59e0b;
-    --hg-accent-text: #1c1c1a;
-  }
+  --hg-bg: var(--canvas, #100d08);
+  --hg-card: var(--panel-bg, #17140f);
+  --hg-text: var(--text-primary, #f2ecdd);
+  --hg-muted: var(--text-muted, #a79c86);
+  --hg-line: var(--border-card, rgba(233, 220, 190, 0.12));
+  --hg-accent: var(--accent-neutral, #d9b25f);
+  --hg-accent-text: #100d08;
 }
 body {
   margin: 0;
   background: var(--hg-bg);
   color: var(--hg-text);
-  font:
-    16px/1.5 system-ui,
-    sans-serif;
 }
 #hoopssim-grill {
   max-width: 46rem;
@@ -70,6 +57,7 @@ body {
 }
 .hg-option input {
   margin-top: 0.3rem;
+  accent-color: var(--hg-accent);
 }
 .hg-option-body {
   display: grid;
