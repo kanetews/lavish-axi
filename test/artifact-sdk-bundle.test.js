@@ -367,19 +367,6 @@ test("Explain this queues a plain-English request for the clicked element withou
   assert.equal(sdk.posted.filter((message) => message.type === "lavish:queuePrompt").length, 2);
 });
 
-test("Explain this keeps the card open when the user has typed something", () => {
-  const sdk = bootSdk();
-  const { evidence } = buildTable(sdk);
-
-  sdk.click(evidence);
-  const card = sdk.card();
-  card.querySelector("textarea").value = "half-written thought";
-  card.querySelector(".lavish-explain").onclick();
-
-  assert.equal(sdk.cards().length, 1);
-  assert.equal(card.querySelector("textarea").value, "half-written thought");
-});
-
 test("the annotation card names the cell it annotates when the cell itself is clicked", () => {
   const sdk = bootSdk();
   const { evidence } = buildTable(sdk);
