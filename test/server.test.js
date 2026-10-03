@@ -3474,6 +3474,11 @@ test("design asset resolver only trusts exact packaged design asset paths", () =
   assert.equal(resolveDesignAssetPath("/design/tailwindcss-browser.js/extra"), null);
 });
 
+test("hoopssim grill renderer and stylesheet resolve as design assets", () => {
+  assert.match(resolveDesignAssetPath("/design/hoopssim-grill.js") || "", /hoopssim-grill\.js$/);
+  assert.match(resolveDesignAssetPath("/design/hoopssim-grill.css") || "", /hoopssim-grill\.css$/);
+});
+
 test("GET /api/:key/export inlines local assets and leaves remote references intact", async () => {
   const dir = await mkdtemp(path.join(tmpdir(), "lavish-serve-"));
   const artifact = path.join(dir, "artifact.html");

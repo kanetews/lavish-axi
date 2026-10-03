@@ -1,0 +1,124 @@
+:root {
+  --hg-bg: #f7f7f5;
+  --hg-card: #ffffff;
+  --hg-text: #1c1c1a;
+  --hg-muted: #5f5f58;
+  --hg-line: #d9d9d2;
+  --hg-accent: #b45309;
+  --hg-accent-text: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hg-bg: #161615;
+    --hg-card: #1f1f1d;
+    --hg-text: #ecebe6;
+    --hg-muted: #a3a29a;
+    --hg-line: #3a3a36;
+    --hg-accent: #f59e0b;
+    --hg-accent-text: #1c1c1a;
+  }
+}
+body {
+  margin: 0;
+  background: var(--hg-bg);
+  color: var(--hg-text);
+  font:
+    16px/1.5 system-ui,
+    sans-serif;
+}
+#hoopssim-grill {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+.hg-round-title {
+  margin: 2rem 0 0.75rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hg-muted);
+}
+.hg-card {
+  background: var(--hg-card);
+  border: 1px solid var(--hg-line);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.hg-card[data-queued="true"] {
+  border-color: var(--hg-accent);
+}
+.hg-question {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+.hg-options {
+  display: grid;
+  gap: 0.5rem;
+}
+.hg-option {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--hg-line);
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+.hg-option:has(input:checked) {
+  border-color: var(--hg-accent);
+}
+.hg-option input {
+  margin-top: 0.3rem;
+}
+.hg-option-body {
+  display: grid;
+  gap: 0.15rem;
+}
+.hg-option-label {
+  font-weight: 600;
+}
+.hg-option-text {
+  color: var(--hg-muted);
+}
+.hg-note {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  border: 1px solid var(--hg-line);
+  border-radius: 0.4rem;
+  background: var(--hg-bg);
+  color: var(--hg-text);
+  font: inherit;
+}
+.hg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+.hg-queue {
+  padding: 0.45rem 0.9rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: var(--hg-accent);
+  color: var(--hg-accent-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.hg-clear {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--hg-line);
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--hg-muted);
+  font: inherit;
+  cursor: pointer;
+}
+.hg-status {
+  color: var(--hg-muted);
+  font-size: 0.9rem;
+}

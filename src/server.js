@@ -102,6 +102,16 @@ const designAssetUrls = {
     source: new URL("../node_modules/@tailwindcss/browser/dist/index.global.js", import.meta.url),
     type: "application/javascript",
   },
+  "hoopssim-grill.js": {
+    packaged: new URL("./design/hoopssim-grill.js", import.meta.url),
+    source: new URL("./grill/hoopssim-grill.js", import.meta.url),
+    type: "application/javascript",
+  },
+  "hoopssim-grill.css": {
+    packaged: new URL("./design/hoopssim-grill.css", import.meta.url),
+    source: new URL("./grill/hoopssim-grill.css", import.meta.url),
+    type: "text/css",
+  },
 };
 
 const DEFAULT_IDLE_TIMEOUT_MS = 30 * 60_000;
