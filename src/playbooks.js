@@ -220,7 +220,8 @@ export const PLAYBOOKS = [
     ],
     lavish_notes: [
       "Lavish is strongest when the artifact becomes a focused review surface and not just a static page.",
-      'A native single-choice question should submit the final value: `<form data-lavish-question="plan" onsubmit="event.preventDefault(); const choice = new FormData(event.currentTarget).get(\'plan\'); if (choice) window.lavish.queuePrompt(\'Use the \' + choice + \' plan\', { tag: \'choice\', text: \'Plan: \' + choice, element: event.currentTarget, data: { question: \'plan\', answer: choice } });"><label><input type="radio" name="plan" value="Starter"> Starter</label><label><input type="radio" name="plan" value="Pro"> Pro</label><button type="submit">Queue this answer</button></form>`.',
+      "A native single-choice question should submit the final value, and a note alone is a valid answer: `<form data-lavish-question=\"plan\" onsubmit=\"event.preventDefault(); const data = new FormData(event.currentTarget); const choice = data.get('plan'); const note = String(data.get('note') || '').trim(); if (choice || note) window.lavish.queuePrompt((choice ? 'Use the ' + choice + ' plan' : 'No plan picked') + (note ? '. Note: ' + note : ''), { tag: 'choice', text: 'Plan: ' + (choice || 'none'), element: event.currentTarget, data: { question: 'plan', answer: choice, note } });\"><label><input type=\"radio\" name=\"plan\" value=\"Starter\"> Starter</label><label><input type=\"radio\" name=\"plan\" value=\"Pro\"> Pro</label><textarea name=\"note\" placeholder=\"Note (optional)\"></textarea><button type=\"submit\">Queue this answer</button></form>`.",
+      "Never pre-select an option (no `checked` on a radio, no default `selected` value): an option is selected only when the user clicked it. Queue whenever there is an option or a note, so a note alone is never discarded.",
       `A tracked batch should submit the final selected set once: <form data-lavish-question="tracked-review" onsubmit="event.preventDefault(); const selected = [...event.currentTarget.querySelectorAll('input[name=items]:checked')].map((input) => ({ id: input.value, label: input.dataset.label, disposition: input.dataset.disposition })); if (selected.length) window.lavish.queuePrompt('Act on every selected item and return an item-by-item receipt. Account for every submitted ID before reporting completion.', { tag: 'tracked-batch', text: 'Apply ' + selected.length + ' selected review items', element: event.currentTarget, data: { items: selected } });"><label><input type="checkbox" name="items" value="R-03" data-label="Preserve rollback behavior" data-disposition="must-address"> R-03 — Preserve rollback behavior</label><label><input type="checkbox" name="items" value="R-08" data-label="Reuse the existing error surface" data-disposition="must-address"> R-08 — Reuse the existing error surface</label><button type="submit">Queue selected items</button></form>`,
       `For a decision artifact a human may open by double-clicking the HTML, optionally include this standalone answer-copy control: it copies every question's answers as text the human pastes back into the chat for the agent to read. It works without Lavish and remains absent unless you write it into the artifact:
 \`\`\`html
@@ -366,6 +367,37 @@ export const PLAYBOOKS = [
     lavish_notes: [
       "A Lavish slide deck can still collect feedback, but each prompt should refer to a slide or decision.",
       "Use slides for persuasion or presentation, not for dense code review.",
+    ],
+  },
+  {
+    id: "hoopssim-grill",
+    use_when:
+      "Must be used for a hoopssim grill: asking Kane a round of decision questions, each with options he picks or answers in a note",
+    choose: [
+      "Use this for every hoopssim grill question page. Write only the question list; Lavish draws the cards, so do not hand-build question markup.",
+      "Use the input playbook instead for non-grill input surfaces such as tuning, triage or tracked batches.",
+    ],
+    structure: [
+      'Write a page with `<link rel="stylesheet" href="/design/hoopssim.css">` (the game\'s charcoal look), `<link rel="stylesheet" href="/design/hoopssim-grill.css">`, `<div id="hoopssim-grill"></div>`, a `<script type="application/json" id="hoopssim-grill-data">` holding the question list, and `<script src="/design/hoopssim-grill.js"></script>` after it. All /design links are inlined by `lavish-axi export`.',
+      'The question list is a JSON array. Each entry: `{ "id": "short-stable-id", "round": 1, "question": "What Kane decides", "options": [{ "label": "Option name", "text": "One short paragraph on what it means and costs", "star": true }] }`. `star` is optional and goes on at most the options the evidence supports.',
+      "To open a later round, append entries with `round` 2 (then 3 and so on) to the same list and save the file. Answered cards stay visible above it.",
+      "Each Queue press reaches `lavish-axi poll` as a prompt with tag `grill-answer` and `target: { question, option, note }`: `question` is the entry id, `option` is the chosen label or null, `note` is the note text or an empty string. Read those fields; do not parse the prompt prose.",
+    ],
+    design_rules: [
+      "One logical group of questions per round, as many questions and rounds as the topic needs.",
+      "Never write a later round's questions before the answers they depend on have arrived.",
+      "Every question is answered with its own Queue button, which queues without sending; Kane sends the batch with Lavish's Send. Never auto-send and never queue from a radio change.",
+      "Never pre-select an option, and never mark one `checked` in markup. An option is selected only when Kane clicks it.",
+      "A note alone is a valid answer: Queue is enabled with a note and no option, and the poll reports `option: null`.",
+      "Treat a null option with a note as a complete answer to that question, not a skipped one.",
+    ],
+    pitfalls: [
+      "Do not hand-build radios and a Submit button that queues only when an option is picked; that drops note-only answers.",
+      "Do not put a ⭐ on every option, or on one the evidence does not back.",
+      "Do not restate the question text inside the option paragraphs.",
+    ],
+    lavish_notes: [
+      "Open the page with `lavish-axi <file>` and `lavish-axi poll <file>`, as for any artifact; the grill needs no other setup.",
     ],
   },
 ];

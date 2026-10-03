@@ -343,6 +343,30 @@ test("the served SDK bundle keeps the clicked element's own identity inside a ta
   assert.equal(message.prompt.target.columnLabel, "Database evidence");
 });
 
+test("Explain this queues a plain-English request for the clicked element without sending", () => {
+  const sdk = bootSdk();
+  const { evidence } = buildTable(sdk);
+
+  sdk.click(evidence);
+  const card = sdk.card();
+  // The stub shadow root finds no cards by selector; let the SDK's own close path see this one.
+  card.parentElement.querySelectorAll = () => [card];
+  card.querySelector(".lavish-explain").onclick();
+
+  const queued = sdk.posted.filter((message) => message.type === "lavish:queuePrompt");
+  assert.equal(queued.length, 1);
+  assert.match(queued[0].prompt.prompt, /plain English, without jargon/);
+  assert.match(queued[0].prompt.prompt, /Drive, Neovide, Cursor/);
+  assert.equal(queued[0].prompt.target.columnLabel, "Database evidence");
+  assert.equal(sdk.posted.filter((message) => message.type === "lavish:sendQueuedPrompts").length, 0);
+  assert.equal(sdk.cards().length, 0);
+
+  // A second answer queues alongside it.
+  sdk.click(evidence);
+  sdk.queue("Check this permission");
+  assert.equal(sdk.posted.filter((message) => message.type === "lavish:queuePrompt").length, 2);
+});
+
 test("the annotation card names the cell it annotates when the cell itself is clicked", () => {
   const sdk = bootSdk();
   const { evidence } = buildTable(sdk);
