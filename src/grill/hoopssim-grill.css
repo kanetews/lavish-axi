@@ -7,6 +7,11 @@
   --hg-line: var(--border-card, rgba(233, 220, 190, 0.12));
   --hg-accent: var(--accent-neutral, #d9b25f);
   --hg-accent-text: #100d08;
+  --hg-accent-tint: var(--accent-neutral-tint, rgba(217, 178, 95, 0.15));
+  --hg-inner: var(--inner-bg, #211c14);
+  --hg-faint: var(--text-faint, #8c826d);
+  --hg-win: var(--win, #8fd5a0);
+  --hg-win-tint: var(--win-bg, rgba(143, 213, 160, 0.14));
 }
 body {
   margin: 0;
@@ -34,10 +39,6 @@ body {
 }
 .hg-card[data-queued="true"] {
   border-color: var(--hg-accent);
-}
-.hg-question {
-  margin: 0 0 0.75rem;
-  font-size: 1.05rem;
 }
 .hg-options {
   display: grid;
@@ -109,4 +110,177 @@ body {
 .hg-status {
   color: var(--hg-muted);
   font-size: 0.9rem;
+}
+.hg-card-head {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+.hg-id {
+  flex: none;
+  margin-top: 0.2rem;
+  padding: 0.1rem 0.45rem;
+  border: 1px solid var(--hg-accent-tint);
+  border-radius: 0.3rem;
+  background: var(--hg-accent-tint);
+  color: var(--hg-accent);
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 0.75rem;
+}
+.hg-question {
+  flex: 1;
+  min-width: 0;
+}
+.hg-question-text,
+.hg-context-text,
+.hg-claim-text,
+.hg-settled-text {
+  margin: 0 0 0.6rem;
+  white-space: pre-line;
+}
+.hg-question-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--hg-text);
+}
+.hg-question-text:last-child,
+.hg-context-text:last-child,
+.hg-claim-text:last-child,
+.hg-settled-text:last-child {
+  margin-bottom: 0;
+}
+.hg-context {
+  margin: 0 0 0.75rem;
+  color: var(--hg-muted);
+}
+.hg-drawings {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 0.75rem;
+}
+.hg-drawing {
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--hg-line);
+  border-radius: 0.4rem;
+  background: var(--hg-inner);
+  overflow-x: auto;
+}
+.hg-drawing-body svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+.hg-drawing figcaption {
+  margin-top: 0.5rem;
+  color: var(--hg-muted);
+  font-size: 0.85rem;
+}
+.hg-claims {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 0.75rem;
+}
+.hg-claim {
+  padding: 0.75rem;
+  border: 1px solid var(--hg-line);
+  border-radius: 0.4rem;
+  background: var(--hg-inner);
+}
+.hg-claim-title {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+.hg-multi-hint {
+  margin: 0 0 0.5rem;
+  color: var(--hg-muted);
+  font-size: 0.9rem;
+}
+.hg-settled-round {
+  margin: -0.4rem 0 0.6rem;
+  color: var(--hg-muted);
+  font-size: 0.9rem;
+}
+.hg-settled-item {
+  margin: 0 0 0.5rem;
+  border: 1px solid var(--hg-line);
+  border-radius: 0.5rem;
+  background: var(--hg-card);
+}
+.hg-settled-item > summary,
+.hg-settled-earlier > summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  list-style: none;
+  cursor: pointer;
+}
+.hg-settled-item > summary {
+  padding: 0.65rem 0.9rem;
+}
+.hg-settled-item > summary::-webkit-details-marker,
+.hg-settled-earlier > summary::-webkit-details-marker {
+  display: none;
+}
+.hg-settled-item > summary::after,
+.hg-settled-earlier > summary::after {
+  content: "▸";
+  margin-left: auto;
+  color: var(--hg-faint);
+}
+.hg-settled-item[open] > summary::after,
+.hg-settled-earlier[open] > summary::after {
+  content: "▾";
+}
+.hg-settled-item .hg-id {
+  margin-top: 0;
+}
+.hg-settled-q {
+  font-family: var(--font-lettering, Georgia, serif);
+  font-size: 1.05rem;
+  color: var(--hg-text);
+}
+.hg-chip {
+  padding: 0.05rem 0.55rem;
+  border-radius: 999px;
+  background: var(--hg-win-tint);
+  color: var(--hg-win);
+  font-size: 0.8rem;
+}
+.hg-settled-body {
+  padding: 0.6rem 0.9rem 0.8rem;
+  border-top: 1px solid var(--hg-line);
+  color: var(--hg-muted);
+  font-size: 0.95rem;
+}
+.hg-settled-body b {
+  color: var(--hg-text);
+}
+.hg-settled-earlier {
+  margin: 0.75rem 0 0;
+}
+.hg-settled-earlier > summary {
+  padding: 0.4rem 0;
+  font-family: var(--font-lettering, Georgia, serif);
+  font-size: 1.05rem;
+  color: var(--hg-text);
+}
+.hg-table-scroll {
+  margin-top: 0.5rem;
+  overflow-x: auto;
+  border: 1px solid var(--hg-line);
+  border-radius: 0.5rem;
+}
+.hg-settled-table td {
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-variant-numeric: normal;
+  vertical-align: top;
+}
+.hg-settled-table .hg-table-id {
+  white-space: nowrap;
+  color: var(--hg-accent);
 }
