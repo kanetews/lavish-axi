@@ -144,6 +144,10 @@ body {
   font-weight: 600;
   color: var(--hg-text);
 }
+.hg-question-text + .hg-question-text {
+  font-size: 1rem;
+  font-weight: 400;
+}
 .hg-question-text:last-child,
 .hg-context-text:last-child,
 .hg-claim-text:last-child,
@@ -281,6 +285,7 @@ body {
   vertical-align: top;
 }
 .hg-settled-table .hg-table-id {
+  width: 1%;
   white-space: nowrap;
   color: var(--hg-accent);
 }
