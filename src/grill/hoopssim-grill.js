@@ -76,6 +76,24 @@
   }
 
   /**
+   * The card's `data-lavish-question` value. Lavish replays a saved tick or note into the card whose
+   * value matches, falling back to the same control position under that value, so a question asked
+   * again keeps its earlier answer unless the value itself changes. It changes with the round, the
+   * wording and the option labels, and holds while only `context`, claims or drawings change.
+   * @param {any} question
+   * @returns {string}
+   */
+  function askKey(question) {
+    const labels = (Array.isArray(question.options) ? question.options : []).map((option) =>
+      String(option && option.label),
+    );
+    const ask = JSON.stringify([roundOf(question), String(question.question ?? ""), labels, question.multi === true]);
+    let hash = 5381;
+    for (let index = 0; index < ask.length; index++) hash = ((hash * 33) ^ ask.charCodeAt(index)) >>> 0;
+    return String(question.id) + "@" + roundOf(question) + "." + hash.toString(36);
+  }
+
+  /**
    * Drawings are page content the agent wrote, inserted as markup; inline SVG is the expected form.
    * @param {any} question
    * @returns {HTMLElement | null}
@@ -123,7 +141,7 @@
     const id = String(question.id);
     const multi = question.multi === true;
     const options = Array.isArray(question.options) ? question.options : [];
-    const card = el("section", { class: "hg-card", "data-lavish-question": id });
+    const card = el("section", { class: "hg-card", "data-lavish-question": askKey(question) });
     if (multi) card.setAttribute("data-multi", "true");
 
     const head = el("div", { class: "hg-card-head" });
@@ -309,19 +327,23 @@
     const settled = questions.filter(isSettled);
     if (settled.length) root.appendChild(renderSettled(settled));
 
-    const rounds = new Map();
-    for (const question of questions) {
-      if (isSettled(question)) continue;
-      const round = roundOf(question);
-      if (!rounds.has(round)) rounds.set(round, []);
-      rounds.get(round).push(question);
-    }
-    for (const round of [...rounds.keys()].sort((a, b) => a - b)) {
-      const section = el("section", { class: "hg-round", "data-round": String(round) });
-      section.appendChild(el("h2", { class: "hg-round-title" }, "Round " + round));
-      for (const question of rounds.get(round)) section.appendChild(renderCard(question));
-      root.appendChild(section);
-    }
+    // Only the latest round is drawn: an open entry left in an earlier round is held until the
+    // agent moves it to the round that asks it.
+    const open = questions.filter((question) => !isSettled(question));
+    if (!open.length) return;
+    const round = Math.max(...open.map(roundOf));
+    const asked = open.filter((question) => roundOf(question) === round);
+    const section = el("section", { class: "hg-round", "data-round": String(round) });
+    section.appendChild(el("h2", { class: "hg-round-title hg-round-now" }, "Round " + round));
+    section.appendChild(
+      el(
+        "p",
+        { class: "hg-round-ask" },
+        asked.length + (asked.length === 1 ? " question" : " questions") + " to answer",
+      ),
+    );
+    for (const question of asked) section.appendChild(renderCard(question));
+    root.appendChild(section);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", render);
