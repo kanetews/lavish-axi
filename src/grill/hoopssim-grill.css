@@ -203,6 +203,14 @@ body {
   color: var(--hg-muted);
   font-size: 0.9rem;
 }
+.hg-round-now {
+  color: var(--hg-accent);
+}
+.hg-round-ask {
+  margin: -0.4rem 0 0.75rem;
+  color: var(--hg-text);
+  font-size: 0.95rem;
+}
 .hg-settled-round {
   margin: -0.4rem 0 0.6rem;
   color: var(--hg-muted);
