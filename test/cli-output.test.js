@@ -459,6 +459,9 @@ test("hoopssim-grill playbook carries the grill rules and the input playbook nev
   assert.match(rules, /note alone is a valid answer/);
   assert.match(rules, /One logical group of questions per round/);
   assert.match(rules, /Never write a later round/);
+  assert.match(rules, /Every card on the page is one Kane can answer now/);
+  assert.match(rules, /asked as a fresh card/);
+  assert.doesNotMatch(rules, /edit its entry in place/);
   assert.ok(grill.structure.some((item) => item.includes("/design/hoopssim-grill.js")));
 
   const input = JSON.stringify(createPlaybookOutput(["input"]).playbook);
